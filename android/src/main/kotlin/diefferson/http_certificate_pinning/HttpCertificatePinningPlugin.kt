@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.StrictMode
 import android.util.Base64
+import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -105,6 +106,7 @@ public class HttpCertificatePinningPlugin : FlutterPlugin, MethodCallHandler {
 
     httpClient.serverCertificates.forEach {
       val server = hashString(url.host, type, it.publicKey.encoded)
+      Log.d("SSLPinningAndroid", "${url.host} => $server")
       for (client in allowedFingerprints) {
         if (server == client) {
           return true
